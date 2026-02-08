@@ -152,14 +152,16 @@ body {
     transform: translateY(-2px);
 }
 
-/* --- Product Grid (cliente.php) --- */
+/* --- Product Grid (productos.php) --- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
     gap: 2rem;
     padding: 2rem 0;
+    clear: both; /* Clear the float from cart-actions */
 }
 
+/* Rest of the product-card and other styles remain the same */
 .product-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
@@ -189,12 +191,14 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* This will push content apart */
 }
 
 .product-title {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
     color: #03e9f4; /* Highlight title */
+    min-height: 56px; /* Give title area a consistent height (approx 2 lines) */
 }
 
 .product-price {
@@ -210,20 +214,22 @@ body {
     margin-bottom: 1rem;
 }
 
-.product-quantity {
+.product-controls {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Space out the items */
     gap: 0.5rem;
     margin-top: auto; /* Push to bottom */
 }
 
-.product-quantity label {
+.product-controls label {
     font-size: 1rem;
     color: white;
+    white-space: nowrap; /* Prevent "Cantidad:" from wrapping */
 }
 
 .quantity-input {
-    width: 70px;
+    width: 50px; /* Make input smaller */
     padding: 8px;
     border: 1px solid rgba(255,255,255,0.3);
     border-radius: 5px;
@@ -231,6 +237,38 @@ body {
     color: white;
     font-size: 1rem;
     text-align: center;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.button-add {
+    padding: 8px 12px;
+    border-radius: 5px;
+    background: #03e9f4;
+    color: #050801;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-add:hover {
+    background: #fff;
+}
+
+.button-add.added {
+    background: #2ecc71;
+    color: white;
 }
 .quantity-input:focus {
     outline: none;
@@ -239,13 +277,9 @@ body {
 }
 
 .cart-actions {
-    grid-column: 1 / -1; /* Span full width */
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    gap: 1rem;
+    float: right; /* Position to the right on productos.php */
+    margin-bottom: 1.5rem; /* Add some space below it */
 }
-
 
 /* --- Total Summary (total.php) --- */
 .total-summary {
@@ -255,6 +289,15 @@ body {
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0,0,0,0.3);
     border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Specific style for buttons on the total page */
+.total-summary .cart-actions {
+    float: none; /* Override the float */
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 .summary-table {
@@ -307,6 +350,12 @@ body {
 }
 
 /* Responsive adjustments */
+@media (max-width: 992px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    }
+}
+
 @media (max-width: 768px) {
     .main-header {
         flex-direction: column;
@@ -328,7 +377,7 @@ body {
         padding: 1rem;
     }
     .product-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* 1 column for mobile */
     }
     .product-card {
         margin: 0 auto;
@@ -371,7 +420,5 @@ body {
         text-align: right;
         padding-right: 1rem;
     }
-    .cart-actions {
-        flex-direction: column;
-    }
 }
+        

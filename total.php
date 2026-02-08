@@ -8,42 +8,54 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'cliente') {
     exit();
 }
 
-// Catálogo de productos (debe ser idéntico al de cliente.php para consistencia)
+// Catálogo de productos (debe ser idéntico al de productos.php para consistencia)
 $productos = [
-    ['id' => 1, 'nombre' => 'Laptop Gamer Pro', 'precio' => 25000, 'stock' => 15, 'imagen' => 'https://placehold.co/300x300/2c5364/ffffff?text=Laptop'],
-    ['id' => 2, 'nombre' => 'Teclado Mecánico RGB', 'precio' => 1800, 'stock' => 50, 'imagen' => 'https://placehold.co/300x300/203a43/ffffff?text=Teclado'],
-    ['id' => 3, 'nombre' => 'Mouse Inalámbrico', 'precio' => 950, 'stock' => 70, 'imagen' => 'https://placehold.co/300x300/0f2027/ffffff?text=Mouse'],
-    ['id' => 4, 'nombre' => 'Monitor Curvo 27"', 'precio' => 7200, 'stock' => 25, 'imagen' => 'https://placehold.co/300x300/2c5364/ffffff?text=Monitor'],
-    ['id' => 5, 'nombre' => 'Audífonos con Micrófono', 'precio' => 1200, 'stock' => 40, 'imagen' => 'https://placehold.co/300x300/203a43/ffffff?text=Audifonos'],
-    ['id' => 6, 'nombre' => 'Webcam Full HD', 'precio' => 1500, 'stock' => 30, 'imagen' => 'https://placehold.co/300x300/0f2027/ffffff?text=Webcam']
+    ['id' => 1, 'nombre' => 'Laptop Gamer Pro', 'precio' => 25000, 'stock' => 15, 'imagen' => 'img/laptop.png'],
+    ['id' => 2, 'nombre' => 'Teclado Mecánico RGB', 'precio' => 1800, 'stock' => 50, 'imagen' => 'img/teclado.png'],
+    ['id' => 3, 'nombre' => 'Mouse Inalámbrico', 'precio' => 950, 'stock' => 70, 'imagen' => 'img/mouse.png'],
+    ['id' => 4, 'nombre' => 'Monitor Curvo 27"', 'precio' => 7200, 'stock' => 25, 'imagen' => 'img/monitor.png'],
+    ['id' => 5, 'nombre' => 'Audífonos con Micrófono', 'precio' => 1200, 'stock' => 40, 'imagen' => 'img/audifonos.png'],
+    ['id' => 6, 'nombre' => 'Webcam Full HD', 'precio' => 1500, 'stock' => 30, 'imagen' => 'img/webcam.png']
 ];
 
-// Obtener las cantidades del formulario POST
-$cantidades = isset($_POST['cantidades']) ? $_POST['cantidades'] : [];
+// Obtener el JSON del carrito desde el campo oculto
+$cart_json = isset($_POST['cart_data']) ? $_POST['cart_data'] : '{}';
+$cart = json_decode($cart_json, true);
 
 $resumen_compra = [];
 $total_pagar = 0;
 
-foreach ($productos as $producto) {
-    $id = $producto['id'];
-    // Verificar si se seleccionó una cantidad para este producto y es mayor a cero
-    if (isset($cantidades[$id]) && $cantidades[$id] > 0) {
-        $cantidad_seleccionada = (int)$cantidades[$id];
-        
-        // Asegurarse de no exceder el stock
-        if ($cantidad_seleccionada > $producto['stock']) {
-            $cantidad_seleccionada = $producto['stock'];
+if (!empty($cart)) {
+    // Crear un mapa de productos por ID para fácil acceso
+    $productos_map = [];
+    foreach ($productos as $p) {
+        $productos_map[$p['id']] = $p;
+    }
+
+    foreach ($cart as $id => $cantidad) {
+        // Asegurarse de que el ID del producto es numérico
+        $id = (int)$id;
+        $cantidad = (int)$cantidad;
+
+        // Verificar que el producto exista y la cantidad sea válida
+        if (isset($productos_map[$id]) && $cantidad > 0) {
+            $producto = $productos_map[$id];
+
+            // Asegurarse de no exceder el stock
+            if ($cantidad > $producto['stock']) {
+                $cantidad = $producto['stock'];
+            }
+            
+            $subtotal = $cantidad * $producto['precio'];
+            $total_pagar += $subtotal;
+            
+            $resumen_compra[] = [
+                'nombre' => $producto['nombre'],
+                'precio' => $producto['precio'],
+                'cantidad' => $cantidad,
+                'subtotal' => $subtotal
+            ];
         }
-        
-        $subtotal = $cantidad_seleccionada * $producto['precio'];
-        $total_pagar += $subtotal;
-        
-        $resumen_compra[] = [
-            'nombre' => $producto['nombre'],
-            'precio' => $producto['precio'],
-            'cantidad' => $cantidad_seleccionada,
-            'subtotal' => $subtotal
-        ];
     }
 }
 ?>
@@ -62,7 +74,7 @@ foreach ($productos as $producto) {
         <h1>Resumen de tu Compra</h1>
         <div class="user-info">
             <span class="username">Usuario: <?php echo htmlspecialchars($_SESSION['usuario']); ?></span>
-            <a href="cliente.php?logout=true" class="logout-btn">Cerrar Sesión</a>
+            <a href="productos.php?logout=true" class="logout-btn">Cerrar Sesión</a>
         </div>
     </header>
 
@@ -71,7 +83,7 @@ foreach ($productos as $producto) {
             <?php if (empty($resumen_compra)): ?>
                 <div class="empty-cart">
                     <h2>No has seleccionado ningún producto.</h2>
-                    <a href="cliente.php" class="button-secondary">Volver al Catálogo</a>
+                    <a href="productos.php" class="button-secondary">Volver al Catálogo</a>
                 </div>
             <?php else: ?>
                 <table class="summary-table">
@@ -101,7 +113,7 @@ foreach ($productos as $producto) {
                     </tfoot>
                 </table>
                 <div class="cart-actions">
-                    <a href="cliente.php" class="button-secondary">Modificar Pedido</a>
+                    <a href="productos.php" class="button-secondary">Modificar Pedido</a>
                     <a href="#" class="button-primary" onclick="alert('¡Gracias por tu compra! (Funcionalidad de pago no implementada)');">Confirmar y Pagar</a>
                 </div>
             <?php endif; ?>
