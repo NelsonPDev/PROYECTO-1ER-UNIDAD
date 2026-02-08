@@ -11,7 +11,7 @@ if ($usuario === 'administrador' && $password === 'asd') {
     $_SESSION['usuario'] = 'Admin';
     $_SESSION['rol'] = 'admin';
     // Redirigir al dashboard (este archivo lo hará tu compañero, pero lo dejamos listo)
-    header("Location: dashboard.php"); 
+    header("Location: admin.php"); 
     exit();
 } 
 // 2. Validar Cliente
