@@ -19,7 +19,7 @@ elseif ($usuario === 'cliente' && $password === '123') {
     $_SESSION['usuario'] = 'Cliente';
     $_SESSION['rol'] = 'cliente';
     // Redirigir al catálogo (este archivo lo hará tu compañero)
-    header("Location: productos.php"); 
+    header("Location: cliente.php"); 
     exit();
 } 
 // 3. Credenciales Incorrectas

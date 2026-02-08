@@ -1,165 +1,377 @@
-/* Estilos Generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* General Body and Page Layout */
 body {
+    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Dark gradient background for general pages */
+    color: #fff; /* Default text color for general pages */
     line-height: 1.6;
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    display: flex;
+    flex-direction: column;
 }
 
-/* Navbar */
-.navbar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
+/* Container for main content areas */
+.container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 1rem 2rem;
+    flex-grow: 1; /* Allow content to grow and push footer down */
+}
+
+/* Main Header (for cliente.php, total.php) */
+.main-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
 }
 
-.logo {
-    color: white;
+.main-header h1 {
+    margin: 0;
     font-size: 1.8rem;
-    font-weight: bold;
 }
 
-.nav-links {
+/* User Info and Logout Button (common) */
+.user-info {
     display: flex;
-    list-style: none;
-    gap: 2rem;
+    align-items: center;
+    gap: 1rem;
 }
 
-.nav-links a {
+.username {
+    font-weight: 600;
+}
+
+.logout-btn {
+    background: #e74c3c;
     color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: opacity 0.3s ease;
-}
-
-.nav-links a:hover {
-    opacity: 0.8;
-}
-
-/* Container Principal */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-/* Sección Hero */
-.hero {
-    text-align: center;
-    padding: 3rem 0;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
-.hero h2 {
-    color: #667eea;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-}
-
-/* Botón Primary */
-.btn-primary {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 0.8rem 2rem;
-    text-decoration: none;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
-    font-weight: bold;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+.logout-btn:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
 }
 
-/* Sección Info */
-.info-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+/* --- Login Page Styles (index.php) --- */
+.login-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+    width: 320px;
+    border: 1px solid rgba(255,255,255,0.2);
+    margin: auto; /* Center the login box */
 }
-
-.card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card h3 {
-    color: #667eea;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.card p {
-    color: #666;
-}
-
-/* Footer */
-footer {
-    background: #333;
+.login-box h2 { 
+    text-align: center; 
+    margin-bottom: 30px; 
     color: white;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
+}
+.input-group { 
+    position: relative; 
+    margin-bottom: 20px; 
+}
+.input-group input {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #03e9f4; /* Highlight input border */
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-direction: column;
-        gap: 1rem;
-    }
+/* --- Error Page Styles (error.php) --- */
+.error-container {
+    text-align: center;
+    background: rgba(255, 0, 0, 0.1);
+    padding: 50px;
+    border-radius: 20px;
+    border: 2px solid #ff4b2b;
+    box-shadow: 0 0 20px rgba(255, 75, 43, 0.5);
+    margin: auto; /* Center the error container */
+}
+.error-container h1 { 
+    color: #ff4b2b; 
+    font-size: 50px; 
+    margin: 0; 
+}
+.error-container p { 
+    font-size: 18px; 
+    margin: 20px 0; 
+    color: white;
+}
 
-    .nav-links {
+/* Common Buttons */
+.button-primary, .button-secondary {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.button-primary {
+    background: #03e9f4; /* Primary action button from login page */
+    color: #050801;
+}
+.button-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 20px #03e9f4;
+    transform: translateY(-2px);
+}
+
+.button-secondary {
+    background: #2c5364; /* A more subdued button */
+    color: white;
+}
+.button-secondary:hover {
+    background: #346377;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+}
+
+/* --- Product Grid (cliente.php) --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.product-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.product-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #03e9f4; /* Highlight title */
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.product-stock {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+}
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto; /* Push to bottom */
+}
+
+.product-quantity label {
+    font-size: 1rem;
+    color: white;
+}
+
+.quantity-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+}
+.quantity-input:focus {
+    outline: none;
+    border-color: #03e9f4;
+    box-shadow: 0 0 5px rgba(3, 233, 244, 0.5);
+}
+
+.cart-actions {
+    grid-column: 1 / -1; /* Span full width */
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+
+/* --- Total Summary (total.php) --- */
+.total-summary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.summary-table thead th {
+    background: rgba(3, 233, 244, 0.2);
+    color: #03e9f4;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.summary-table tbody td {
+    color: white;
+}
+
+.summary-table tfoot td {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #03e9f4;
+}
+
+.summary-table .total-label {
+    text-align: right;
+}
+
+.summary-table .total-amount {
+    font-size: 1.5rem;
+    color: #03e9f4;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 3rem;
+}
+.empty-cart h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-header {
         flex-direction: column;
         gap: 1rem;
+        padding: 1rem;
+    }
+    .main-header h1 {
+        font-size: 1.5rem;
+    }
+    .user-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .logout-btn {
+        width: 100%;
         text-align: center;
     }
-
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-
     .container {
         padding: 1rem;
+    }
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    .product-card {
+        margin: 0 auto;
+        max-width: 350px;
+    }
+    .summary-table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    .summary-table, .summary-table tbody, .summary-table tr, .summary-table td {
+        display: block;
+        width: 100%;
+    }
+    .summary-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 5px;
+    }
+    .summary-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .summary-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width:  calc(50% - 20px);
+        text-align: left;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .summary-table tfoot td {
+        text-align: right;
+    }
+    .summary-table .total-label {
+        text-align: left;
+        padding-left: 1rem;
+    }
+    .summary-table .total-amount {
+        text-align: right;
+        padding-right: 1rem;
+    }
+    .cart-actions {
+        flex-direction: column;
     }
 }
