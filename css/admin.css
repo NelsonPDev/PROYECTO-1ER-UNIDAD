@@ -24,6 +24,12 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .admin-header h1 {
     color: #2c3e50;
     margin-bottom: 0.5rem;
@@ -33,6 +39,37 @@
 .admin-header p {
     color: #95a5a6;
     font-size: 1rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.username {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
 }
 
 /* Estadísticas */
@@ -215,6 +252,23 @@
 
     .admin-header h1 {
         font-size: 1.5rem;
+    }
+
+    .header-top {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .user-info {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logout-btn {
+        width: 100%;
+        text-align: center;
     }
 
     .data-table {

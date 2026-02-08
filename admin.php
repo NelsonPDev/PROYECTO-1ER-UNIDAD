@@ -4,6 +4,22 @@
  * Datos ficticios para demostración sin base de datos
  */
 
+// Iniciar sesión
+session_start();
+
+// Manejar logout
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+
+// Verificar que el usuario esté autenticado
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
+    header("Location: index.php");
+    exit();
+}
+
 // Datos simulados de ventas mensuales
 $ventasMensuales = array(
     'Enero' => 4500,
@@ -44,8 +60,16 @@ $ventaMinima = min($ventasMensuales);
         <!-- Contenido Principal -->
         <main class="admin-content">
             <header class="admin-header">
-                <h1>Panel de Administración - Gráficas de Ventas</h1>
-                <p>Datos simulados para demostración</p>
+                <div class="header-top">
+                    <div>
+                        <h1>Panel de Administración - Gráficas de Ventas</h1>
+                        <p>Datos simulados para demostración</p>
+                    </div>
+                    <div class="user-info">
+                        <span class="username">Bienvenido, <?php echo $_SESSION['usuario']; ?></span>
+                        <a href="admin.php?logout=true" class="logout-btn">Cerrar Sesión</a>
+                    </div>
+                </div>
             </header>
 
             <!-- Estadísticas Principales -->
